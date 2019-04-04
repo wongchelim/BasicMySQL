@@ -1,0 +1,16 @@
+Export to the text with eliminator (it also can be csv file)
+====================================================================================
+SELECT * FROM passwd INTO OUTFILE '/tmp/tutorials.txt'
+FIELDS TERMINATED BY ',' ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n';
+
+Or
+
+mysqldump -u root -p DB_NAME tutorials_tbl > dump.txt
+
+
+Load data into the table with text file have format
+====================================================================================
+LOAD DATA LOCAL INFILE 'dump.txt' INTO TABLE mytbl
+   -> FIELDS TERMINATED BY ':'
+   -> LINES TERMINATED BY '\r\n';
