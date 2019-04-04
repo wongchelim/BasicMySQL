@@ -1,0 +1,24 @@
+CREATE TABLE IF NOT EXISTS City (
+  City_id INT(11) NOT NULL AUTO_INCREMENT,
+  city_name  VARCHAR(45) DEFAULT NULL,
+  found_date DATE DEFAULT NULL,
+  description VARCHAR(200) DEFAULT NULL,
+  PRIMARY KEY (City_id)
+) ENGINE=InnoDB;
+
+
+DELIMITER //
+CREATE procedure loaddata ()
+BEGIN
+   DECLARE x INT;
+   set x = 1;
+   start transaction;
+	WHILE x  <= 1000 DO
+	 INSERT INTO City  (City_id, city_name, found_date, description) VALUES (x, 'PJ',now(), 'England');
+	 set x = x +1;
+	END WHILE;
+ commit;
+END; //
+DELIMITER ;
+
+Call loaddata;
