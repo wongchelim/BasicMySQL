@@ -1,0 +1,39 @@
+To login
+mysql -u root -p
+enter password
+
+Check that particular user
+===========================================================================
+select * from mysql.user where user='root'\G
+
+
+Create that user
+===========================================================================
+create user 'any'@'localhost' identified by 'Abc_1234';
+GRANT ALL PRIVILEGES ON *.* TO 'any'@'localhost' WITH GRANT OPTION;
+
+Clear all user cache in the db
+===========================================================================
+FLUSH PRIVILEGES;
+
+Change password for a user
+===========================================================================
+Set password for 'jim'@'localhost' = password(newpass)
+
+Rename user 
+===========================================================================
+Rename user  'jim'@'localhost' to  'tom'@'localhost'
+
+Drop user 
+===========================================================================
+Drop user  'jim'@'localhost';
+
+Revoke 
+===========================================================================
+revoke delete, update on world_innodb.* from 'student'@'localhost';
+
+Display privileges obtain
+===========================================================================
+show grants for current_user;
+Show grants for 'john'@hostname.example.com'
+
