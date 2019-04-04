@@ -1,0 +1,64 @@
+This is to demonstrate to install of latest edition MySQL 8
+================================================================================
+Once download the MySQL commercial release
+extract it and place into a folder.
+
+[root@localhost app]# ls
+mysql-8.0                                        
+
+Inside the folder
+================================================================================
+cd /u01/app/mysql-8.0/8.0.12
+
+Remove 16bit rpm
+================================================================================
+find ./ -name '*i686*' -exec rm -fr {} \;
+
+Do following for prerequisite software to add and remove
+================================================================================
+rpm -e --nodeps mariadb-libs
+yum install perl-JSON
+yum install openssl-devel
+rpm -ivh mysql-commercial-common-8.0.12-1.1.el7.x86_64.rpm
+rpm -ivh mysql-commercial-libs-8.0.12-1.1.el7.x86_64.rpm
+rpm -ivh mysql-commercial-client-8.0.12-1.1.el7.x86_64.rpm
+rpm -ivh mysql-commercial-server-8.0.12-1.1.el7.x86_64.rpm
+rpm -ivh mysql-commercial-embedded-compat-8.0.12-1.1.el7.x86_64.rpm
+rpm -ivh mysql-commercial-backup-8.0.12-1.1.el7.x86_64.rpm
+rpm -ivh mysql-commercial-libs-compat-8.0.12-1.1.el7.x86_64.rpm
+rpm -ivh mysql-commercial-devel-8.0.12-1.1.el7.x86_64.rpm
+rpm -ivh mysql-commercial-test-8.0.12-1.1.el7.x86_64.rpm
+
+Edit the /etc/my.cnf
+================================================
+vim /etc/my.cnf
+
+Start the mysqld
+================================
+systemctl start mysqld
+
+Verify the mysqld status
+================================
+systemctl status mysqld
+
+Try login
+================================
+[root@myserver ~]# mysql
+ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)
+
+Edit the /etc/my.cnf
+================================
+[root@myserver ~]# vim /etc/my.cnf
+
+
+Get temporarily password locate 
+================================
+grep 'temporary password' /u01/app/mysql8/data/mysqld.log
+
+Login to reset the password
+================================================================
+mysql -uroot -p
+
+Reset Password first login using the default password
+================================================================================================
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'XXXXX_123';
