@@ -1,0 +1,37 @@
+Note:
+Temporary Table will be deleted by itself once the session gone.
+Temporary Table stores all data and table definition in an interim disk file.
+Memory Table stores all data into Memory and stores table definition into .frm disk file.
+Temporary Table can also store all data into memory, but for that, you have to create a Temporary Table using Memory Engine.
+
+
+Create temporary table
+===========================================================================
+CREATE TEMPORARY TABLE SalesSummary (
+   -> product_name VARCHAR(50) NOT NULL
+   -> , total_sales DECIMAL(12,2) NOT NULL DEFAULT 0.00
+   -> , avg_unit_price DECIMAL(7,2) NOT NULL DEFAULT 0.00
+   -> , total_units_sold INT UNSIGNED NOT NULL DEFAULT 0
+);
+
+DROP TABLE SalesSummary;
+
+Get list of temp tables in the databases
+===========================================================================
+SHOW TABLES FROM INFORMATION_SCHEMA LIKE 'INNODB_TEMP%';
+Or
+SELECT TABLE_SCHEMA, ENGINE, COUNT(*) AS count_tables,
+  SUM(DATA_LENGTH+INDEX_LENGTH) AS size,
+SUM(INDEX_LENGTH) AS index_size FROM INFORMATION_SCHEMA.TABLES
+WHERE TABLE_SCHEMA NOT IN ('mysql', 'INFORMATION_SCHEMA')
+  AND ENGINE = "MEMORY" GROUP BY TABLE_SCHEMA, ENGINE;
+  
+  
+Create memory table
+===========================================================================
+CREATE TABLE name_yourown_memory_table
+(
+  cust_id int(11) NOT NULL AUTO_INCREMENT,
+  date_created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (cust_id)
+) ENGINE=MEMORY; 
