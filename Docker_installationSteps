@@ -1,0 +1,55 @@
+Below are the basic steps to install Docker version 18.
+====================================================================================
+Install prerequisite 
+======================================
+yum install -y yum-utils device-mapper-persistent-data lvm2
+
+
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+yum install docker-ce
+*Note, you might encounter a container selinux issue. Please proceed below.... if not you may skip below and proceed to startup the docker service.
+yum-config-manager --add-repo=http://mirror.centos.org/centos/7/extras/x86_64/
+yum install container-selinux
+yum list docker-ce --showduplicates | sort -r
+...
+docker-ce.x86_64            18.06.0.ce-3.el7                    docker-ce-stable
+docker-ce.x86_64            18.06.0.ce-3.el7                    docker-ce-edge
+docker-ce.x86_64            18.05.0.ce-3.el7.centos             docker-ce-edge
+docker-ce.x86_64            18.04.0.ce-3.el7.centos             docker-ce-edge
+...
+yum install docker-ce-18.06.0.ce-3.el7
+
+or
+wget https://download.docker.com/linux/centos/7/x86_64/edge/Packages/docker-ce-18.06.0.ce-3.el7.x86_64.rpm
+rpm -ivh docker-ce-18.06.0.ce-3.el7.x86_64.rpm
+warning: docker-ce-18.06.0.ce-3.el7.x86_64.rpm: Header V4 RSA/SHA512 Signature, key ID 621e9f35: NOKEY
+Preparing...                          ################################# [100%]
+Updating / installing...
+   1:docker-ce-18.06.0.ce-3.el7       ################################# [100%]
+
+
+Start the service
+[root@oel7mysql1 ~]# systemctl start docker
+[root@oel7mysql1 ~]# systemctl status docker
+● docker.service - Docker Application Container Engine
+   Loaded: loaded (/usr/lib/systemd/system/docker.service; disabled; vendor preset: disabled)
+   Active: active (running) since Mon 2019-04-08 16:51:59 +08; 3s ago
+     Docs: https://docs.docker.com
+ Main PID: 5701 (dockerd)
+   Memory: 43.1M
+   CGroup: /system.slice/docker.service
+           ├─5701 /usr/bin/dockerd
+           └─5710 docker-containerd --config /var/run/docker/containerd/containerd.toml
+
+Apr 08 16:51:58 oel7mysql1 dockerd[5701]: time="2019-04-08T16:51:58.108819434+08:00" level=info msg="pickfirstBalancer: HandleSubConnStateChange: 0xc4200...odule=grpc
+Apr 08 16:51:58 oel7mysql1 dockerd[5701]: time="2019-04-08T16:51:58.109084455+08:00" level=info msg="pickfirstBalancer: HandleSubConnStateChange: 0xc4200...odule=grpc
+Apr 08 16:51:58 oel7mysql1 dockerd[5701]: time="2019-04-08T16:51:58.109109185+08:00" level=info msg="Loading containers: start."
+Apr 08 16:51:59 oel7mysql1 dockerd[5701]: time="2019-04-08T16:51:59.038825539+08:00" level=info msg="Default bridge (docker0) is assigned with an IP addr...P address"
+Apr 08 16:51:59 oel7mysql1 dockerd[5701]: time="2019-04-08T16:51:59.604260837+08:00" level=info msg="Loading containers: done."
+Apr 08 16:51:59 oel7mysql1 dockerd[5701]: time="2019-04-08T16:51:59.630350131+08:00" level=warning msg="Not using native diff for overlay2, this may caus...r=overlay2
+Apr 08 16:51:59 oel7mysql1 dockerd[5701]: time="2019-04-08T16:51:59.646345127+08:00" level=info msg="Docker daemon" commit=0ffa825 graphdriver(s)=overlay...18.06.0-ce
+Apr 08 16:51:59 oel7mysql1 dockerd[5701]: time="2019-04-08T16:51:59.647951536+08:00" level=info msg="Daemon has completed initialization"
+Apr 08 16:51:59 oel7mysql1 dockerd[5701]: time="2019-04-08T16:51:59.823660801+08:00" level=info msg="API listen on /var/run/docker.sock"
+Apr 08 16:51:59 oel7mysql1 systemd[1]: Started Docker Application Container Engine.
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@oel7mysql1 ~]#
