@@ -1,0 +1,79 @@
+mysqldump use to export and load back in without duplicating the rest of the databases.
+
+[any@oel7mysql1 ~]# mysqldump -u any -p --all-databases > alldb.sql
+Enter password:
+exit
+ls
+-->alldb.sql
+
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sbtest             |
+| sim                |
+| sys                |
++--------------------+
+7 rows in set (0.00 sec)
+
+drop database sim;
+use sakila;
+drop table name_yourown_memory_table;
+
+
+[any@oel7mysql1 ~]# mysql -u any -p < alldb.sql
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sbtest             |
+| sim                |
+| sys                |
++--------------------+
+7 rows in set (0.00 sec)
+
+use sakila;
+
+Database changed
+mysql> show tables;
++----------------------------+
+| Tables_in_sakila           |
++----------------------------+
+| actor                      |
+| actor_info                 |
+| address                    |
+| category                   |
+| city                       |
+| country                    |
+| customer                   |
+| customer_list              |
+| film                       |
+| film_actor                 |
+| film_category              |
+| film_list                  |
+| film_text                  |
+| inventory                  |
+| language                   |
+| name_yourown_memory_table  |
+| nicer_but_slower_film_list |
+| payment                    |
+| rental                     |
+| sales_by_film_category     |
+| sales_by_store             |
+| staff                      |
+| staff_list                 |
+| store                      |
++----------------------------+
+24 rows in set (0.00 sec)
+
+
